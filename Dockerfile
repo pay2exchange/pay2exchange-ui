@@ -1,4 +1,4 @@
-FROM node:6
+FROM node:18-bullseye
 
 # Install nginx
 RUN apt-get update \
@@ -6,15 +6,18 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN npm install -g cross-env
+RUN npm install -g pnpm
 
 # We copy the code from the docker-compose-yml
 # RUN git clone https://github.com/bitshares/bitshares-ui.git /bitshares-ui
 CMD mkdir /bitshares-ui
 WORKDIR /bitshares-ui
 
-ADD package.json .
-RUN cross-env npm install --env.prod
+COPY charting_library ./charting_library
+
+COPY . .
+RUN pnpm install --prefer-frozen-lockfile
+RUN pnpm run build
 
 EXPOSE 80
 
