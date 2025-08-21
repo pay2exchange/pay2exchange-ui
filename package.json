@@ -280,6 +280,5 @@
         "webpack-dev-server": "^4.6.0",
         "webpack-hot-middleware": "^2.25.1",
         "worker-loader": "^3.0.8"
-    },
-    "packageManager": "yarn@1.22.22"
+    }
 }
